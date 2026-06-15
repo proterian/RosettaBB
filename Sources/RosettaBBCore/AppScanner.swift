@@ -41,10 +41,21 @@ public struct AppScanner: Sendable {
             .appendingPathComponent("Contents")
             .appendingPathComponent("Info.plist")
 
-        guard let dict = NSDictionary(contentsOf: infoPlist),
-              let exec = dict["CFBundleExecutable"] as? String else {
+        guard let dict = NSDictionary(contentsOf: infoPlist) else {
             return AppEntry(bundleURL: appBundle, name: fallbackName,
                             architectures: [], verdict: .unknown)
+        }
+
+        let version = dict["CFBundleShortVersionString"] as? String
+        let bundleIdentifier = dict["CFBundleIdentifier"] as? String
+        let name = (dict["CFBundleDisplayName"] as? String)
+            ?? (dict["CFBundleName"] as? String)
+            ?? fallbackName
+
+        guard let exec = dict["CFBundleExecutable"] as? String else {
+            return AppEntry(bundleURL: appBundle, name: name,
+                            architectures: [], verdict: .unknown,
+                            version: version, bundleIdentifier: bundleIdentifier)
         }
 
         let execURL = appBundle
@@ -53,10 +64,8 @@ public struct AppScanner: Sendable {
             .appendingPathComponent(exec)
         let archs = (try? MachOInspector.architectures(ofFileAt: execURL)) ?? []
         let verdict = AppClassifier.verdict(for: archs)
-        let name = (dict["CFBundleDisplayName"] as? String)
-            ?? (dict["CFBundleName"] as? String)
-            ?? fallbackName
         return AppEntry(bundleURL: appBundle, name: name,
-                        architectures: archs, verdict: verdict)
+                        architectures: archs, verdict: verdict,
+                        version: version, bundleIdentifier: bundleIdentifier)
     }
 }
