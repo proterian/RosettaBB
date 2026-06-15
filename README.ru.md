@@ -16,6 +16,10 @@
 какие из них **Intel-only** — то есть требуют Rosetta и перестанут работать,
 начиная с macOS 28 (см. [Apple Support 102527](https://support.apple.com/ru-ru/102527)).
 
+<p align="center">
+  <img src="Assets/screenshot.png" width="720" alt="RosettaBB">
+</p>
+
 ## Возможности
 
 - Сканирует `/Applications`, `/Applications/Utilities` и `~/Applications`.

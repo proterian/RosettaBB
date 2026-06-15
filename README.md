@@ -16,6 +16,10 @@ A utility for Apple Silicon Macs that scans your installed apps and shows which
 ones are **Intel-only** — i.e. require Rosetta and will stop working starting
 with macOS 28 (see [Apple Support 102527](https://support.apple.com/en-us/102527)).
 
+<p align="center">
+  <img src="Assets/screenshot.png" width="720" alt="RosettaBB screenshot">
+</p>
+
 ## Features
 
 - Scans `/Applications`, `/Applications/Utilities` and `~/Applications`.
