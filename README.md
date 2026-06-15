@@ -1,4 +1,8 @@
-# RosettaBB
+<p align="center">
+  <img src="Assets/icon-master.png" width="160" alt="RosettaBB">
+</p>
+
+<h1 align="center">RosettaBB</h1>
 
 [![Release](https://img.shields.io/github/v/release/proterian/RosettaBB)](https://github.com/proterian/RosettaBB/releases/latest)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)

@@ -50,12 +50,20 @@ struct ContentView: View {
         if model.isScanning {
             list
         } else if model.entries.isEmpty {
-            ContentUnavailableView(
-                "Нажмите «Сканировать»",
-                systemImage: "macwindow.on.rectangle",
-                description: Text("Найдём приложения и покажем, какие из них Intel-only.")
-            )
-            .frame(maxHeight: .infinity)
+            VStack(spacing: 18) {
+                if let icon = NSImage(named: NSImage.applicationIconName) {
+                    Image(nsImage: icon)
+                        .resizable()
+                        .frame(width: 104, height: 104)
+                }
+                VStack(spacing: 6) {
+                    Text("Нажмите «Сканировать»")
+                        .font(.title3.weight(.semibold))
+                    Text("Найдём приложения и покажем, какие из них Intel-only.")
+                        .foregroundStyle(.secondary)
+                }
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
         } else if model.visibleEntries.isEmpty {
             ContentUnavailableView(
                 "Intel-приложений не найдено",

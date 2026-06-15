@@ -11,6 +11,29 @@ struct RosettaBBApp: App {
                 .frame(minWidth: 640, minHeight: 480)
         }
         .windowResizability(.contentMinSize)
+        .commands {
+            CommandGroup(replacing: .appInfo) {
+                Button("О программе RosettaBB") {
+                    RosettaBBApp.showAboutPanel()
+                }
+            }
+        }
+    }
+
+    /// Стандартная панель «О программе» с описанием, версией и ссылкой.
+    @MainActor
+    private static func showAboutPanel() {
+        let credits = NSAttributedString(
+            string: "Находит Intel-приложения, которым нужен Rosetta, и проверяет для них обновления.\n\ngithub.com/proterian/RosettaBB",
+            attributes: [
+                .font: NSFont.systemFont(ofSize: 11),
+                .foregroundColor: NSColor.secondaryLabelColor,
+            ]
+        )
+        NSApp.orderFrontStandardAboutPanel(options: [
+            .credits: credits,
+            NSApplication.AboutPanelOptionKey(rawValue: "Copyright"): "© 2026 proterian · MIT",
+        ])
     }
 }
 
