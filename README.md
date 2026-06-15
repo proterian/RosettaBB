@@ -10,6 +10,8 @@
 - Читает Mach-O-заголовок главного бинарника каждого `.app`.
 - Классифицирует: **Intel** / **Universal** / **Apple**.
 - Фильтр «только Intel», счётчики, открытие приложения в Finder.
+- Проверка обновлений для Intel-приложений (App Store, Sparkle appcast,
+  Homebrew Cask) — по кнопке, статус прямо в строке списка.
 
 ## Сборка и запуск
 
@@ -25,6 +27,17 @@ swift run RosettaBB
 swift test
 ```
 
+## Сборка приложения и DMG
+
+```bash
+bash scripts/generate-icons.sh   # один раз: иконки из Assets/
+bash scripts/package-dmg.sh      # → dist/RosettaBB.app и dist/RosettaBB-1.0.dmg
+```
+
+Бандл подписывается ad-hoc (требование запуска arm64); без Developer ID и
+нотаризации. При первом запуске из DMG откройте приложение через
+правый клик → «Открыть».
+
 ## Архитектура
 
 - `RosettaBBCore` — чистое ядро без UI: `MachOInspector` (парсинг Mach-O),
@@ -33,4 +46,4 @@ swift test
 
 ## Статус
 
-MVP. Проверка наличия обновлений для Intel-приложений — планируемая будущая фаза.
+Рабочее приложение: аудит архитектур + проверка обновлений Intel-приложений.
