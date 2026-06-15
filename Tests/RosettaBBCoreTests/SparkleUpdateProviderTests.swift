@@ -50,6 +50,34 @@ struct SparkleUpdateProviderTests {
         #expect(result.url?.absoluteString == "https://example.com/App-2.0.zip")
     }
 
+    @Test("child-element форма sparkle:shortVersionString")
+    func childElementForm() async throws {
+        let bundle = try makeSparkleBundle(feed: "https://example.com/appcast.xml")
+        defer { try? FileManager.default.removeItem(at: bundle.deletingLastPathComponent()) }
+        let app = AppEntry(bundleURL: bundle, name: "Spk",
+                           architectures: [.x86_64], verdict: .intel,
+                           version: "1.0", bundleIdentifier: "com.example.spk")
+        let xml = """
+        <?xml version="1.0" encoding="utf-8"?>
+        <rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" version="2.0">
+          <channel>
+            <item>
+              <sparkle:shortVersionString>3.1</sparkle:shortVersionString>
+              <enclosure url="https://example.com/App-3.1.zip"/>
+            </item>
+          </channel>
+        </rss>
+        """
+        let provider = SparkleUpdateProvider(fetcher: StubFetcher(data: Data(xml.utf8)))
+        let outcome = await provider.check(app)
+        guard case let .success(result) = outcome else {
+            Issue.record("ожидался .success, получено \(outcome)")
+            return
+        }
+        #expect(result.latestVersion == "3.1")
+        #expect(result.url?.absoluteString == "https://example.com/App-3.1.zip")
+    }
+
     @Test("нет SUFeedURL → notApplicable")
     func notApplicable() async throws {
         let bundle = try makeSparkleBundle(feed: nil)

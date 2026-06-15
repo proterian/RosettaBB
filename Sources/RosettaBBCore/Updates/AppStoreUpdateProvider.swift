@@ -22,10 +22,11 @@ public struct AppStoreUpdateProvider: UpdateProvider {
         do {
             let data = try await fetcher.data(from: url)
             guard let json = try JSONSerialization.jsonObject(with: data) as? [String: Any],
-                  let results = json["results"] as? [[String: Any]],
-                  let first = results.first,
-                  let version = first["version"] as? String else {
+                  let results = json["results"] as? [[String: Any]] else {
                 return .failure(reason: "Не удалось разобрать ответ App Store")
+            }
+            guard let first = results.first, let version = first["version"] as? String else {
+                return .failure(reason: "App Store вернул 0 результатов")
             }
             let trackURL = (first["trackViewUrl"] as? String).flatMap { URL(string: $0) }
             return .success(UpdateCheckResult(latestVersion: version, source: .appStore, url: trackURL))
