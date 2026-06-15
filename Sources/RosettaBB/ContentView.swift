@@ -18,18 +18,18 @@ struct ContentView: View {
             Button {
                 Task { await model.scan() }
             } label: {
-                Label("Сканировать", systemImage: "magnifyingglass")
+                Label(L("scan_button"), systemImage: "magnifyingglass")
             }
             .disabled(model.isScanning)
 
             Button {
                 Task { await model.checkUpdates() }
             } label: {
-                Label("Проверить обновления", systemImage: "arrow.triangle.2.circlepath")
+                Label(L("check_updates_button"), systemImage: "arrow.triangle.2.circlepath")
             }
             .disabled(model.isScanning || model.isCheckingUpdates || model.intelCount == 0)
 
-            Toggle("Только Intel", isOn: $model.showIntelOnly)
+            Toggle(L("intel_only_toggle"), isOn: $model.showIntelOnly)
                 .toggleStyle(.checkbox)
 
             Spacer()
@@ -57,18 +57,18 @@ struct ContentView: View {
                         .frame(width: 104, height: 104)
                 }
                 VStack(spacing: 6) {
-                    Text("Нажмите «Сканировать»")
+                    Text(L("empty_title"))
                         .font(.title3.weight(.semibold))
-                    Text("Найдём приложения и покажем, какие из них Intel-only.")
+                    Text(L("empty_subtitle"))
                         .foregroundStyle(.secondary)
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         } else if model.visibleEntries.isEmpty {
             ContentUnavailableView(
-                "Intel-приложений не найдено",
+                L("no_intel_title"),
                 systemImage: "checkmark.seal",
-                description: Text("Все найденные приложения — Universal или Apple Silicon.")
+                description: Text(L("no_intel_subtitle"))
             )
             .frame(maxHeight: .infinity)
         } else {
@@ -111,7 +111,7 @@ private struct AppRow: View {
                 Image(systemName: "arrow.right.circle")
             }
             .buttonStyle(.borderless)
-            .help("Показать в Finder")
+            .help(L("show_in_finder"))
         }
         .padding(.vertical, 2)
     }
@@ -132,22 +132,22 @@ private struct AppRow: View {
                 }
                 .buttonStyle(.borderless)
                 .foregroundStyle(.green)
-                .help("Открыть страницу обновления")
+                .help(L("open_update_page"))
             } else {
                 Text("↑ \(version) · \(sourceLabel(source))")
                     .font(.caption.weight(.semibold))
                     .foregroundStyle(.green)
             }
         case .upToDate(let source):
-            Text("актуально · \(sourceLabel(source))")
+            Text("\(L("up_to_date")) · \(sourceLabel(source))")
                 .font(.caption)
                 .foregroundStyle(.secondary)
         case .unknownSource:
-            Text("источник неизвестен")
+            Text(L("source_unknown"))
                 .font(.caption)
                 .foregroundStyle(.secondary)
         case .failed(let reason):
-            Text("ошибка")
+            Text(L("error"))
                 .font(.caption)
                 .foregroundStyle(.red)
                 .help(reason)

@@ -13,7 +13,7 @@ struct RosettaBBApp: App {
         .windowResizability(.contentMinSize)
         .commands {
             CommandGroup(replacing: .appInfo) {
-                Button("О программе RosettaBB") {
+                Button(L("about_menu")) {
                     RosettaBBApp.showAboutPanel()
                 }
             }
@@ -24,7 +24,7 @@ struct RosettaBBApp: App {
     @MainActor
     private static func showAboutPanel() {
         let credits = NSAttributedString(
-            string: "Находит Intel-приложения, которым нужен Rosetta, и проверяет для них обновления.\n\ngithub.com/proterian/RosettaBB",
+            string: L("about_credits"),
             attributes: [
                 .font: NSFont.systemFont(ofSize: 11),
                 .foregroundColor: NSColor.secondaryLabelColor,

@@ -1,0 +1,14 @@
+"scan_button" = "Сканировать";
+"check_updates_button" = "Проверить обновления";
+"intel_only_toggle" = "Только Intel";
+"empty_title" = "Нажмите «Сканировать»";
+"empty_subtitle" = "Найдём приложения и покажем, какие из них Intel-only.";
+"no_intel_title" = "Intel-приложений не найдено";
+"no_intel_subtitle" = "Все найденные приложения — Universal или Apple Silicon.";
+"show_in_finder" = "Показать в Finder";
+"open_update_page" = "Открыть страницу обновления";
+"up_to_date" = "актуально";
+"source_unknown" = "источник неизвестен";
+"error" = "ошибка";
+"about_menu" = "О программе RosettaBB";
+"about_credits" = "Находит Intel-приложения, которым нужен Rosetta, и проверяет для них обновления.\n\ngithub.com/proterian/RosettaBB";

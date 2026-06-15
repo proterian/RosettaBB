@@ -1,0 +1,14 @@
+"scan_button" = "Scan";
+"check_updates_button" = "Check for Updates";
+"intel_only_toggle" = "Intel only";
+"empty_title" = "Press “Scan”";
+"empty_subtitle" = "We’ll scan your apps and show which are Intel-only.";
+"no_intel_title" = "No Intel apps found";
+"no_intel_subtitle" = "All discovered apps are Universal or Apple Silicon.";
+"show_in_finder" = "Show in Finder";
+"open_update_page" = "Open update page";
+"up_to_date" = "up to date";
+"source_unknown" = "source unknown";
+"error" = "error";
+"about_menu" = "About RosettaBB";
+"about_credits" = "Finds Intel apps that still need Rosetta and checks them for updates.\n\ngithub.com/proterian/RosettaBB";

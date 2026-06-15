@@ -4,58 +4,66 @@
 
 <h1 align="center">RosettaBB</h1>
 
-[![Release](https://img.shields.io/github/v/release/proterian/RosettaBB)](https://github.com/proterian/RosettaBB/releases/latest)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Platform](https://img.shields.io/badge/platform-macOS%2014%2B-lightgrey)](https://github.com/proterian/RosettaBB/releases/latest)
+<p align="center">
+  <a href="https://github.com/proterian/RosettaBB/releases/latest"><img src="https://img.shields.io/github/v/release/proterian/RosettaBB" alt="Release"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License: MIT"></a>
+  <a href="https://github.com/proterian/RosettaBB/releases/latest"><img src="https://img.shields.io/badge/platform-macOS%2014%2B-lightgrey" alt="Platform"></a>
+</p>
 
-Утилита для Apple Silicon Mac: сканирует установленные приложения и показывает,
-какие из них **Intel-only** — то есть требуют Rosetta и перестанут работать,
-начиная с macOS 28 (см. [Apple Support 102527](https://support.apple.com/ru-ru/102527)).
+<p align="center"><b>English</b> · <a href="README.ru.md">Русский</a></p>
 
-## Возможности (MVP)
+A utility for Apple Silicon Macs that scans your installed apps and shows which
+ones are **Intel-only** — i.e. require Rosetta and will stop working starting
+with macOS 28 (see [Apple Support 102527](https://support.apple.com/en-us/102527)).
 
-- Сканирует `/Applications`, `/Applications/Utilities` и `~/Applications`.
-- Читает Mach-O-заголовок главного бинарника каждого `.app`.
-- Классифицирует: **Intel** / **Universal** / **Apple**.
-- Фильтр «только Intel», счётчики, открытие приложения в Finder.
-- Проверка обновлений для Intel-приложений (App Store, Sparkle appcast,
-  Homebrew Cask) — по кнопке, статус прямо в строке списка.
+## Features
 
-## Сборка и запуск
+- Scans `/Applications`, `/Applications/Utilities` and `~/Applications`.
+- Reads the Mach-O header of each app's main binary.
+- Classifies every app: **Intel** / **Universal** / **Apple**.
+- "Intel only" filter, counters, "Show in Finder".
+- Update checking for Intel apps (App Store, Sparkle appcast, Homebrew Cask) —
+  on demand, with the result shown right in the list.
+- Localized interface: English and Russian (follows the system language).
 
-Требуется macOS 14+ и Swift 6 (Xcode 16+).
+## Download
+
+Grab the latest **RosettaBB.dmg** from the
+[Releases](https://github.com/proterian/RosettaBB/releases/latest) page and drag
+the app into Applications. The app is not notarized, so on first launch use
+right-click → **Open**. Requires macOS 14+ (Apple Silicon).
+
+## Build & run
+
+Requires macOS 14+ and Swift 6 (Xcode 16+).
 
 ```bash
 swift run RosettaBB
 ```
 
-## Тесты
+## Tests
 
 ```bash
 swift test
 ```
 
-## Сборка приложения и DMG
+## Building the app & DMG
 
 ```bash
-bash scripts/generate-icons.sh   # один раз: иконки из Assets/
-bash scripts/package-dmg.sh      # → dist/RosettaBB.app и dist/RosettaBB-1.0.dmg
+bash scripts/generate-icons.sh   # once: icons from Assets/
+bash scripts/package-dmg.sh      # → dist/RosettaBB.app and dist/RosettaBB-1.0.dmg
 ```
 
-Бандл подписывается ad-hoc (требование запуска arm64); без Developer ID и
-нотаризации. При первом запуске из DMG откройте приложение через
-правый клик → «Открыть».
+The bundle is ad-hoc signed (required to launch arm64 binaries); without a
+Developer ID certificate and notarization there is no point signing it for
+wider distribution.
 
-## Архитектура
+## Architecture
 
-- `RosettaBBCore` — чистое ядро без UI: `MachOInspector` (парсинг Mach-O),
-  `AppScanner` (обход файловой системы), `AppClassifier` (вердикт). Покрыто тестами.
-- `RosettaBB` — SwiftUI-оболочка: `ScanViewModel` + `ContentView`.
+- `RosettaBBCore` — pure, UI-free core: `MachOInspector` (Mach-O parsing),
+  `AppScanner` (filesystem walk), `AppClassifier` (verdict). Covered by tests.
+- `RosettaBB` — SwiftUI shell: `ScanViewModel` + `ContentView`.
 
-## Статус
-
-Рабочее приложение: аудит архитектур + проверка обновлений Intel-приложений.
-
-## Лицензия
+## License
 
 [MIT](LICENSE).

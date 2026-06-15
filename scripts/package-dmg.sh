@@ -31,6 +31,12 @@ rm -rf "$DIST"
 mkdir -p "$APP/Contents/MacOS" "$APP/Contents/Resources"
 cp "$EXECUTABLE" "$APP/Contents/MacOS/$APP_NAME"
 
+# Бандл ресурсов SwiftPM-модуля (локализация и пр.) — нужен для Bundle.module внутри .app
+MODULE_BUNDLE="$BIN_PATH/${APP_NAME}_${APP_NAME}.bundle"
+if [ -d "$MODULE_BUNDLE" ]; then
+    cp -R "$MODULE_BUNDLE" "$APP/Contents/Resources/"
+fi
+
 cat > "$APP/Contents/Info.plist" <<PLIST
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
